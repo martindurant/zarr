@@ -981,7 +981,9 @@ class FSStore(MutableMapping):
         key = normalize_storage_path(key).lstrip('/')
         if key:
             *bits, end = key.split('/')
-            key = '/'.join(bits + [end.replace('.', self.key_separator)])
+            if not FSStore._is_meta(key):
+                end = end.replace('.', self.key_separator)
+            key = '/'.join(bits + [end])
         return key.lower() if self.normalize_keys else key
 
     def __getitem__(self, key):

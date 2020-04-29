@@ -36,4 +36,4 @@ class TestS3(object):
 
         array_json = conn.Object(bucket, 'test.zarr/array/.zarray').get()
         assert [2,3] == json.loads(array_json["Body"].read())["chunks"]
-        chunk_bytes = conn.Object(bucket, 'test.zarr/array/0.0').get()
+        chunk_bytes = conn.Object(bucket, 'test.zarr/array/0/0').get()
