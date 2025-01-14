@@ -173,13 +173,13 @@ def test_create_array_defaults(store: Store):
     """
     g = zarr.open(store, mode="w", zarr_format=2)
     arr = g.create_array("one", dtype="i8", shape=(1,), chunks=(1,), compressor=None)
-    assert arr._async_array.compressor is None
+    assert not arr.compressor
     assert not (arr.filters)
     arr = g.create_array("two", dtype="i8", shape=(1,), chunks=(1,))
-    assert arr._async_array.compressor is not None
+    assert arr.compressors
     assert not (arr.filters)
     arr = g.create_array("three", dtype="i8", shape=(1,), chunks=(1,), compressor=Zstd())
-    assert arr._async_array.compressor is not None
+    assert arr.compressors
     assert not (arr.filters)
     with pytest.raises(ValueError):
         g.create_array(
